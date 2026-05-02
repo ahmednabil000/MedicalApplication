@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  CLIENT
+}
+
+enum MedicalService {
+  CONSULTATION
+  SURGERY
+  EXAMINATION
+  THERAPY
+}
+
+enum ReservationStatus {
+  PENDING
+  APPROVED
+  COMPLETED
+  REJECTED
+}
+
+model User {
+  id                   String               @id @default(uuid())
+  name                 String
+  email                String?              @unique
+  phone                String?
+  hashPassword         String?
+  googleId             String?              @unique
+  facebookId           String?              @unique
+  role                 Role                 @default(CLIENT)
+  reservations         Reservation[]        @relation("UserReservations")
+  assignedReservations ReservationDetails[] @relation("AssignedReservations")
+}
+
+model ReservationDetails {
+  id            String            @id @default(uuid())
+  status        ReservationStatus @default(PENDING)
+  reason        String?
+  assignedToId  String?
+  assignedTo    User?             @relation("AssignedReservations", fields: [assignedToId], references: [id])
+  reservationId String            @unique
+  reservation   Reservation       @relation(fields: [reservationId], references: [id])
+}
+
+model Reservation {
+  id                   String              @id @default(uuid())
+  patientName          String
+  age                  Int
+  egyptianMobileNumber String
+  locationUrl          String?
+  reservationDate      DateTime
+  service              MedicalService
+  userId               String
+  user                 User                @relation("UserReservations", fields: [userId], references: [id])
+  details              ReservationDetails?
+}
