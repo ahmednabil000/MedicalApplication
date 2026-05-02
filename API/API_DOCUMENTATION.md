@@ -4,10 +4,11 @@ This document provides a high-level overview of the API.
 
 > 🚀 **Interactive Documentation**
 > For full endpoint details, request/response schemas, and an interactive test client, start the server with `NODE_ENV=development` (the default) and visit the [Scalar API Reference UI](http://localhost:3000/docs).
-> 
+>
 > The raw OpenAPI 3.0 specification can be fetched at `http://localhost:3000/openapi.json`.
 
 ## Base URL
+
 All API endpoints are prefixed with `/api` unless stated otherwise.
 The server runs on `http://localhost:<PORT>` (default is 3000).
 
@@ -18,11 +19,13 @@ The server runs on `http://localhost:<PORT>` (default is 3000).
 These endpoints handle OAuth logins with Google and Facebook using Passport.js. Successful authentication returns a JWT token.
 
 ### 1.1 Initiate Google Login
+
 - **Method:** `GET`
 - **Endpoint:** `/api/auth/google`
 - **Description:** Redirects the user to the Google OAuth consent screen. Requests `profile` and `email` scopes.
 
 ### 1.2 Google Callback
+
 - **Method:** `GET`
 - **Endpoint:** `/api/auth/google/callback`
 - **Description:** The callback URL for Google OAuth. On failure, redirects to `/login`.
@@ -36,11 +39,13 @@ These endpoints handle OAuth logins with Google and Facebook using Passport.js. 
   ```
 
 ### 1.3 Initiate Facebook Login
+
 - **Method:** `GET`
 - **Endpoint:** `/api/auth/facebook`
 - **Description:** Redirects the user to the Facebook OAuth consent screen. Requests `email` scope.
 
 ### 1.4 Facebook Callback
+
 - **Method:** `GET`
 - **Endpoint:** `/api/auth/facebook/callback`
 - **Description:** The callback URL for Facebook OAuth. On failure, redirects to `/login`.
@@ -60,6 +65,7 @@ These endpoints handle OAuth logins with Google and Facebook using Passport.js. 
 These endpoints manage medical reservations.
 
 ### 2.1 Create a Reservation
+
 - **Method:** `POST`
 - **Endpoint:** `/api/reservations/`
 - **Description:** Creates a new reservation for a patient.
@@ -80,6 +86,7 @@ These endpoints manage medical reservations.
 - **Response (400 Bad Request):** Validation error message.
 
 ### 2.2 Get All Reservations
+
 - **Method:** `GET`
 - **Endpoint:** `/api/reservations/`
 - **Description:** Retrieves a paginated list of reservations.
@@ -93,6 +100,7 @@ These endpoints manage medical reservations.
 - **Response (200 OK):** Returns a list/paginated object of reservations.
 
 ### 2.3 Get My Assigned Reservations
+
 - **Method:** `GET`
 - **Endpoint:** `/api/reservations/my-assigned`
 - **Description:** Retrieves a paginated list of reservations assigned to the currently authenticated administrator.
@@ -111,9 +119,10 @@ These endpoints manage medical reservations.
 
 These endpoints manage user data and administration.
 
-*Note: Since the router is mounted on `/api/users` and the paths inside the router correspond to `/users` and `/users/admin`, the resulting endpoints are nested.*
+_Note: Since the router is mounted on `/api/users` and the paths inside the router correspond to `/users` and `/users/admin`, the resulting endpoints are nested._
 
 ### 3.1 Get All Users
+
 - **Method:** `GET`
 - **Endpoint:** `/api/users/users`
 - **Description:** Retrieves all users in the system.
@@ -121,6 +130,7 @@ These endpoints manage user data and administration.
 - **Response (200 OK):** Returns an array of user objects.
 
 ### 3.2 Create an Admin User
+
 - **Method:** `POST`
 - **Endpoint:** `/api/users/users/admin`
 - **Description:** Creates a new user and assigns them the `ADMIN` role.
@@ -135,6 +145,7 @@ These endpoints manage user data and administration.
 ## 4. General Endpoints
 
 ### 4.1 Health Check
+
 - **Method:** `GET`
 - **Endpoint:** `/`
 - **Description:** Basic endpoint to verify the server is running.
@@ -145,17 +156,20 @@ These endpoints manage user data and administration.
 ## Security & Enums
 
 ### Roles
+
 - `SUPER_ADMIN`
 - `ADMIN`
 - `CLIENT` (Default)
 
 ### Medical Services
+
 - `CONSULTATION`
 - `SURGERY`
 - `EXAMINATION`
 - `THERAPY`
 
 ### Reservation Statuses
+
 - `PENDING` (Default)
 - `APPROVED`
 - `COMPLETED`

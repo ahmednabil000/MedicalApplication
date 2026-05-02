@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { authenticate, authorize } = require('../shared/auth-middleware');
-const reservationsController = require('./reservations-controller');
+const { authenticate, authorize } = require("../shared/auth-middleware");
+const reservationsController = require("./reservations-controller");
 
 /**
  * @openapi
@@ -49,7 +49,7 @@ const reservationsController = require('./reservations-controller');
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post('/', reservationsController.createReservation);
+router.post("/", reservationsController.createReservation);
 
 /**
  * @openapi
@@ -118,7 +118,12 @@ router.post('/', reservationsController.createReservation);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get('/', authenticate, authorize("SUPER_ADMIN", "ADMIN"), reservationsController.getReservations);
+router.get(
+  "/",
+  authenticate,
+  authorize("SUPER_ADMIN", "ADMIN"),
+  reservationsController.getReservations,
+);
 
 /**
  * @openapi
@@ -188,6 +193,11 @@ router.get('/', authenticate, authorize("SUPER_ADMIN", "ADMIN"), reservationsCon
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get('/my-assigned', authenticate, authorize("ADMIN"), reservationsController.getMyAssignedReservations);
+router.get(
+  "/my-assigned",
+  authenticate,
+  authorize("ADMIN"),
+  reservationsController.getMyAssignedReservations,
+);
 
 module.exports = router;

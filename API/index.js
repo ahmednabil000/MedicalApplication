@@ -16,7 +16,7 @@ app.use(
     secret: process.env.JWT_SECRET || "your_jwt_secret_key",
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 
 app.use(passport.initialize());
@@ -36,10 +36,12 @@ if (process.env.NODE_ENV !== "production") {
     apiReference({
       spec: { content: openApiSpec },
       theme: "default",
-    })
+    }),
   );
 
-  console.log(`API docs available at http://localhost:${process.env.PORT || 3000}/docs`);
+  console.log(
+    `API docs available at http://localhost:${process.env.PORT || 3000}/docs`,
+  );
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -65,7 +67,10 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", require("./modules/auth/auth-routes"));
 app.use("/api/users", require("./modules/users/users-routes"));
-app.use("/api/reservations", require("./modules/reservations/reservations-routes"));
+app.use(
+  "/api/reservations",
+  require("./modules/reservations/reservations-routes"),
+);
 
 connectDB();
 

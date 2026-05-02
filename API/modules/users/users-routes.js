@@ -102,6 +102,11 @@ router.get("/users", usersController.getUsers);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post("/users/admin", authenticate, authorize("SUPER_ADMIN"), usersController.createAdmin);
+router.post(
+  "/users/admin",
+  authenticate,
+  authorize("SUPER_ADMIN"),
+  usersController.createAdmin,
+);
 
 module.exports = router;
