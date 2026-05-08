@@ -45,8 +45,14 @@ export default function RootLayout() {
 
   return (
     <>
+    
       <SafeAreaProvider style={{ direction: "rtl" }}>
-        <Stack>
+      
+        <Stack screenOptions={{
+          contentStyle:{
+              backgroundColor: Colors.gray10,
+          }
+        }}>
           <Stack.Screen
             name="(tabs)"
             options={{
@@ -60,12 +66,14 @@ export default function RootLayout() {
             }}
           />
         </Stack>
+      
       </SafeAreaProvider>
       <StatusBar
         barStyle="light-content"
         backgroundColor={Colors.main}
         // hidden
       />
+    
     </>
   );
 }
