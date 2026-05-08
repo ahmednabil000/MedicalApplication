@@ -1,6 +1,5 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import React, { Dispatch, SetStateAction } from "react";
-import styled, { css } from "styled-components/native";
 import { Colors } from "@/constants/theme";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
@@ -10,99 +9,82 @@ interface Props {
   setIsSignup: Dispatch<SetStateAction<boolean>>;
 }
 
-interface TabButtonProps {
-  $isActive?: boolean;
-}
-
-const Container = styled(View)`
-  flex: 1;
-
-  padding: 10px;
-
-  background: ${Colors.white};
-  border-radius: 20px 20px 0px 0px;
-`;
-
-const TabsContainer = styled(View)`
-  flex: 1;
-
-  gap: 10px;
-  padding: 10px;
-  border-radius: 20px;
-  flex-direction: row;
-  background: ${Colors.gray10};
-  max-height: 65px;
-`;
-
-const TabButton = styled(TouchableOpacity)<TabButtonProps>`
-  padding: 10px;
-  flex: 1;
-  gap: 10px;
-
-  background: ${Colors.white};
-  border-radius: 10px;
-
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-
-  ${({ $isActive }) =>
-    $isActive &&
-    css`
-      background: ${Colors.main};
-    `}
-`;
-
-const TabButtonText = styled(Text)<TabButtonProps>`
-  font-family: "AlmaraiRegular";
-  font-size: 16px;
-  color: ${Colors.gray700};
-
-  line-height: 20px;
-  ${({ $isActive }) =>
-    $isActive &&
-    css`
-      color: ${Colors.white};
-    `}
-`;
-
-const FormContentContainer = styled(ScrollView)`
-  padding: 20px 10px;
-
-  gap: 40px;
-
-  background: ${Colors.white};
-
-  /* Inside auto layout */
-  flex: 1;
-`;
-
 export default function LoginFormContent({ isSignup, setIsSignup }: Props) {
   return (
-    <Container>
-      <TabsContainer>
-        <TabButton
-          $isActive={!isSignup}
+    <View style={styles.container}>
+      <View style={styles.tabsContainer}>
+        <TouchableOpacity
+          style={[styles.tabButton, !isSignup && styles.activeTabButton]}
           onPress={() => {
             setIsSignup(false);
           }}
         >
-          <TabButtonText $isActive={!isSignup}>تسجيل الدخول</TabButtonText>
-        </TabButton>
+          <Text style={[styles.tabButtonText, !isSignup && styles.activeTabButtonText]}>
+            تسجيل الدخول
+          </Text>
+        </TouchableOpacity>
 
-        <TabButton
-          $isActive={isSignup}
+        <TouchableOpacity
+          style={[styles.tabButton, isSignup && styles.activeTabButton]}
           onPress={() => {
             setIsSignup(true);
           }}
         >
-          <TabButtonText $isActive={isSignup}>انشاء حساب</TabButtonText>
-        </TabButton>
-      </TabsContainer>
-      <FormContentContainer>
+          <Text style={[styles.tabButtonText, isSignup && styles.activeTabButtonText]}>
+            انشاء حساب
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <ScrollView style={styles.formContentContainer}>
         {!isSignup && <LoginForm />}
         {isSignup && <SignupForm />}
-      </FormContentContainer>
-    </Container>
+      </ScrollView>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  tabsContainer: {
+    flex: 1,
+    gap: 10,
+    padding: 10,
+    borderRadius: 20,
+    flexDirection: "row",
+    backgroundColor: Colors.gray10,
+    maxHeight: 65,
+  },
+  tabButton: {
+    padding: 10,
+    flex: 1,
+    gap: 10,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  activeTabButton: {
+    backgroundColor: Colors.main,
+  },
+  tabButtonText: {
+    fontFamily: "AlmaraiRegular",
+    fontSize: 16,
+    color: Colors.gray700,
+    lineHeight: 20,
+  },
+  activeTabButtonText: {
+    color: Colors.white,
+  },
+  formContentContainer: {
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    backgroundColor: Colors.white,
+    flex: 1,
+  },
+});

@@ -1,6 +1,5 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import styled from "styled-components/native";
 import { Colors } from "@/constants/theme";
 import EyeIcon from "../assets/icons/eye.svg";
 import EyeLinedIcon from "../assets/icons/eye-lined.svg";
@@ -21,43 +20,7 @@ interface BasicInputProps {
   endIcon?: React.ReactElement;
   secureTextEntry?: boolean;
   hasEyeIcon?: boolean;
-  //   onChangeText: string;
 }
-
-const OtterInputContainer = styled(View)`
-  flex: 1;
-  gap: 10px;
-`;
-
-const InputLabel = styled(Text)`
-  color: ${Colors.gray700};
-  font-family: "AlmaraiRegular";
-  font-size: 12px;
-`;
-
-const InputContainer = styled(View)`
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 0px 10px;
-  gap: 10px;
-
-  background: ${Colors.white};
-  /* gray200 */
-  border: 1px solid ${Colors.gray200};
-  border-radius: 10px;
-`;
-
-const IconAndInputContainer = styled(View)`
-  flex-direction: row;
-  align-items: center;
-
-  gap: 6px;
-`;
-
-const TheInput = styled(TextInput)``;
 
 export default function BasicInput({
   label,
@@ -71,30 +34,59 @@ export default function BasicInput({
   const [showPassword, setShowPassword] = useState<boolean>(secureTextEntry);
 
   return (
-    <>
-      <OtterInputContainer>
-        <InputLabel>{label}</InputLabel>
-        <InputContainer>
-          <IconAndInputContainer>
-            {icon}
-            <TextInput
-              placeholder={placeholder}
-              placeholderTextColor={Colors.gray400}
-              keyboardType={keyboardType}
-              secureTextEntry={showPassword}
-              style={{ direction: "rtl", fontFamily: "AlmaraiRegular" }}
-            />
-          </IconAndInputContainer>
-          {endIcon}
-          {hasEyeIcon && (
-            <>
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                {showPassword ? <EyeIcon /> : <EyeLinedIcon />}
-              </TouchableOpacity>
-            </>
-          )}
-        </InputContainer>
-      </OtterInputContainer>
-    </>
+    <View style={styles.otterInputContainer}>
+      <Text style={styles.inputLabel}>{label}</Text>
+      <View style={styles.inputContainer}>
+        <View style={styles.iconAndInputContainer}>
+          {icon}
+          <TextInput
+            placeholder={placeholder}
+            placeholderTextColor={Colors.gray400}
+            keyboardType={keyboardType}
+            secureTextEntry={showPassword}
+            style={styles.theInput}
+          />
+        </View>
+        {endIcon}
+        {hasEyeIcon && (
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            {showPassword ? <EyeIcon /> : <EyeLinedIcon />}
+          </TouchableOpacity>
+        )}
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  otterInputContainer: {
+    flex: 1,
+    gap: 10,
+  },
+  inputLabel: {
+    color: Colors.gray700,
+    fontFamily: "AlmaraiRegular",
+    fontSize: 12,
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    gap: 10,
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    borderColor: Colors.gray200,
+    borderRadius: 10,
+  },
+  iconAndInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  theInput: {
+    direction: "rtl",
+    fontFamily: "AlmaraiRegular",
+  },
+});

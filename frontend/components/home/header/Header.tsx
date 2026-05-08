@@ -1,24 +1,25 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import styled from 'styled-components/native'
 import Notifications from './Notifications'
 import ProfileData from './ProfileData'
 
-const Container = styled(View)`
-  flex: 1;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-  padding: 10px;
-  max-height: 60px;
-  background-color: white;
-`
-
 export default function Header() {
   return (
-    <Container>
+    <View style={styles.container}>
       <ProfileData />
       <Notifications />
-    </Container>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    padding: 10,
+    maxHeight: 60,
+    backgroundColor: "white",
+  },
+})

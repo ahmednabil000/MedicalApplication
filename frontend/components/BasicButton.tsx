@@ -1,40 +1,36 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-import styled from "styled-components/native";
 import { Colors } from "@/constants/theme";
 
 interface props {
   label: string;
 }
 
-const ButtonContainer = styled(TouchableOpacity)`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 12px;
-  gap: 10px;
-
-  background: ${Colors.main};
-  border-radius: 10px;
-
-  flex: 1;
-`;
-
-const ButtonText = styled(Text)`
-  color: ${Colors.white};
-  font-family: "AlmaraiBold";
-  font-size: 14px;
-  line-height: 20px;
-`;
-
 const BasicButton = ({ label }: props) => {
   return (
-    <>
-      <ButtonContainer>
-        <ButtonText>{label}</ButtonText>
-      </ButtonContainer>
-    </>
+    <TouchableOpacity style={styles.buttonContainer}>
+      <Text style={styles.buttonText}>{label}</Text>
+    </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+    gap: 10,
+    backgroundColor: Colors.main,
+    borderRadius: 10,
+    flex: 1,
+  },
+  buttonText: {
+    color: Colors.white,
+    fontFamily: "AlmaraiBold",
+    fontSize: 14,
+    lineHeight: 20,
+  },
+});
 
 export default BasicButton;

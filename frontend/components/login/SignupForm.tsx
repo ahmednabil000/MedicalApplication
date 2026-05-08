@@ -1,7 +1,6 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import BasicInput from "../BasicInput";
-import styled from "styled-components/native";
 import PhoneIcon from "../../assets/icons/phone.svg";
 import PasswordIcon from "../../assets/icons/password.svg";
 import NameIcon from "../../assets/icons/name.svg";
@@ -9,83 +8,55 @@ import BasicButton from "../BasicButton";
 import { Colors } from "@/constants/theme";
 import { Link } from "expo-router";
 
-const InputsContainer = styled(View)`
-  gap: 20px;
-
-  flex: 1;
-`;
-
-const InputsAndButtonContainer = styled(View)`
-  gap: 40px;
-
-  flex: 1;
-`;
-
-const ButtonAndForgetPasswordContainer = styled(View)`
-  gap: 10px;
-
-  flex: 1;
-`;
-
-const ForgetPasswordAndRememberMeContainer = styled(View)`
-  gap: 10px;
-  /* flex-direction: row; */
-  align-items: center;
-  flex: 1;
-`;
-
-const ForgetButtonText = styled(Text)`
-  font-family: "AlmaraiRegular";
-
-  font-size: 12px;
-  line-height: 20px;
-
-  color: ${Colors.main};
-`;
-
 export default function SignupForm() {
   return (
-    <>
-      <InputsAndButtonContainer>
-        <InputsContainer>
-          <BasicInput
-            label="الاسم"
-            placeholder="محمد نبيل"
-            icon={<NameIcon />}
-            keyboardType="default"
-          />
-          <BasicInput
-            label="رقم الهاتف"
-            placeholder="01061178893"
-            icon={<PhoneIcon />}
-            keyboardType="phone-pad"
-          />
-          <BasicInput
-            label="كلمة المرور"
-            placeholder="••••••••"
-            icon={<PasswordIcon />}
-            //   keyboardType="visible-password"
-            secureTextEntry
-            hasEyeIcon
-          />
-          <BasicInput
-            label="تأكيد كلمة المرور"
-            placeholder="••••••••"
-            icon={<PasswordIcon />}
-            //   keyboardType="visible-password"
-            secureTextEntry
-            hasEyeIcon
-          />
-        </InputsContainer>
-        <ButtonAndForgetPasswordContainer>
-          <BasicButton label="انشاء حساب" />
-          {/* <ForgetPasswordAndRememberMeContainer>
-            <Link href={"https://translate.google.com/"}>
-              <ForgetButtonText>نسيت كلمة المرور ؟</ForgetButtonText>
-            </Link>
-          </ForgetPasswordAndRememberMeContainer> */}
-        </ButtonAndForgetPasswordContainer>
-      </InputsAndButtonContainer>
-    </>
+    <View style={styles.inputsAndButtonContainer}>
+      <View style={styles.inputsContainer}>
+        <BasicInput
+          label="الاسم"
+          placeholder="محمد نبيل"
+          icon={<NameIcon />}
+          keyboardType="default"
+        />
+        <BasicInput
+          label="رقم الهاتف"
+          placeholder="01061178893"
+          icon={<PhoneIcon />}
+          keyboardType="phone-pad"
+        />
+        <BasicInput
+          label="كلمة المرور"
+          placeholder="••••••••"
+          icon={<PasswordIcon />}
+          secureTextEntry
+          hasEyeIcon
+        />
+        <BasicInput
+          label="تأكيد كلمة المرور"
+          placeholder="••••••••"
+          icon={<PasswordIcon />}
+          secureTextEntry
+          hasEyeIcon
+        />
+      </View>
+      <View style={styles.buttonAndForgetPasswordContainer}>
+        <BasicButton label="انشاء حساب" />
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  inputsContainer: {
+    gap: 20,
+    flex: 1,
+  },
+  inputsAndButtonContainer: {
+    gap: 40,
+    flex: 1,
+  },
+  buttonAndForgetPasswordContainer: {
+    gap: 10,
+    flex: 1,
+  },
+});
