@@ -10,7 +10,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <HomePageContent/>
+      <HomePageContent />
       {/* <Link
         href="/auth"
         style={styles.authLink}
@@ -25,7 +25,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.gray10,
+    backgroundColor: Colors.black,
   },
   authLink: {
     color: "red",

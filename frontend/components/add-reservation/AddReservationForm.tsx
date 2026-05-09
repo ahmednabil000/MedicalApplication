@@ -1,16 +1,18 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import BasicInput from '../BasicInput'
-import { Colors } from '@/constants/theme'
-import BasicButton from '../BasicButton'
-import { ICONS } from '@/constants/icons'
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import BasicInput from "../BasicInput";
+import { Colors } from "@/constants/theme";
+import BasicButton from "../BasicButton";
+import { ICONS } from "@/constants/icons";
 
-import BasicSelectInput from '../BasicSelectInput'
+import BasicSelectInput from "../BasicSelectInput";
 
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller } from "react-hook-form";
 
-import LocationPickerModal from '../LocationPickerModal';
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker"
+import LocationPickerModal from "../LocationPickerModal";
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 interface FormData {
   serviceType: string;
   fullName: string;
@@ -20,6 +22,7 @@ interface FormData {
   time: string;
   location: string;
   notes: string;
+  phone: string;
 }
 
 // Check if maps are available
@@ -36,7 +39,12 @@ export default function AddReservationForm() {
   const [showTimePicker, setShowTimePicker] = React.useState(false);
   const [showMap, setShowMap] = React.useState(false);
 
-  const { control, handleSubmit, setValue, formState: { errors } } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: {
       serviceType: "",
       fullName: "",
@@ -46,42 +54,49 @@ export default function AddReservationForm() {
       time: "",
       location: "",
       notes: "",
-    }
+      phone: "",
+    },
   });
 
   const onSubmit = (data: FormData) => {
     console.log("Form Data Submitted:", data);
   };
 
-  const handleDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+  const handleDateChange = (
+    event: DateTimePickerEvent,
+    selectedDate?: Date,
+  ) => {
     setShowDatePicker(false);
     if (selectedDate) {
-      const formattedDate = selectedDate.toLocaleDateString('ar-EG', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+      const formattedDate = selectedDate.toLocaleDateString("ar-EG", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       });
-      setValue('date', formattedDate);
+      setValue("date", formattedDate);
     }
   };
 
-  const handleTimeChange = (event: DateTimePickerEvent, selectedTime?: Date) => {
+  const handleTimeChange = (
+    event: DateTimePickerEvent,
+    selectedTime?: Date,
+  ) => {
     setShowTimePicker(false);
     if (selectedTime) {
-      const formattedTime = selectedTime.toLocaleTimeString('ar-EG', {
-        hour: '2-digit',
-        minute: '2-digit',
+      const formattedTime = selectedTime.toLocaleTimeString("ar-EG", {
+        hour: "2-digit",
+        minute: "2-digit",
       });
-      setValue('time', formattedTime);
+      setValue("time", formattedTime);
     }
   };
 
   return (
-     <View style={styles.inputsAndButtonContainer}>
-      <ScrollView 
-      showsVerticalScrollIndicator={false} 
-      style={styles.inputsContainer}
-      contentContainerStyle={styles.inputsContentContainer}
+    <View style={styles.inputsAndButtonContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.inputsContainer}
+        contentContainerStyle={styles.inputsContentContainer}
       >
         <Controller
           control={control}
@@ -116,6 +131,23 @@ export default function AddReservationForm() {
               value={value}
               onChangeText={onChange}
               error={errors.fullName?.message}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="phone"
+          rules={{ required: "هذا الحقل مطلوب" }}
+          render={({ field: { onChange, value } }) => (
+            <BasicInput
+              label="رقم الهاتف"
+              placeholder="01061178893"
+              icon={<ICONS.phone />}
+              keyboardType="phone-pad"
+              value={value}
+              onChangeText={onChange}
+              error={errors.phone?.message}
             />
           )}
         />
@@ -196,7 +228,11 @@ export default function AddReservationForm() {
           render={({ field: { onChange, value } }) => (
             <BasicInput
               label="الموقع"
-              placeholder={mapsAvailable ? "حدد الموقع من الخريطة" : "أدخل رابط الموقع أو العنوان"}
+              placeholder={
+                mapsAvailable
+                  ? "حدد الموقع من الخريطة"
+                  : "أدخل رابط الموقع أو العنوان"
+              }
               icon={<ICONS.location />}
               value={value}
               onChangeText={onChange}
@@ -229,7 +265,10 @@ export default function AddReservationForm() {
           visible={showMap}
           onClose={() => setShowMap(false)}
           onSelect={(loc) => {
-            setValue('location', `${loc.latitude.toFixed(4)}, ${loc.longitude.toFixed(4)}`);
+            setValue(
+              "location",
+              `${loc.latitude.toFixed(4)}, ${loc.longitude.toFixed(4)}`,
+            );
           }}
         />
 
@@ -247,17 +286,16 @@ export default function AddReservationForm() {
             />
           )}
         />
-        
       </ScrollView>
       <View style={styles.buttonAndForgetPasswordContainer}>
         <BasicButton label="تأكيد الحجز" onPress={handleSubmit(onSubmit)} />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-    inputsContainer: {
+  inputsContainer: {
     flex: 1,
   },
   inputsContentContainer: {
@@ -282,4 +320,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: Colors.main,
   },
-})
+});

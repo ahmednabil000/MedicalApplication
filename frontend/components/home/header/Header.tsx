@@ -1,7 +1,8 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import Notifications from './Notifications'
-import ProfileData from './ProfileData'
+import { StyleSheet, View } from "react-native";
+import React from "react";
+import Notifications from "./Notifications";
+import ProfileData from "./ProfileData";
+import { Colors } from "@/constants/theme";
 
 export default function Header() {
   return (
@@ -9,7 +10,7 @@ export default function Header() {
       <ProfileData />
       <Notifications />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -20,6 +21,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     maxHeight: 60,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
   },
-})
+});
