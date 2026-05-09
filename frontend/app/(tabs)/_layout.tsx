@@ -15,7 +15,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        
+       
         tabBarShowLabel: true,
         tabBarActiveTintColor: Colors.main,
         tabBarInactiveTintColor: Colors.gray400,
@@ -24,23 +24,21 @@ export default function TabLayout() {
           marginBottom: 5,
         },
         tabBarStyle: {
-          alignSelf: "center",
-          width: 260,
-          height: 70,
-          marginBottom: 20,
+         
+          width: "100%",
+          height: 80,
           backgroundColor: Colors.white,
-          borderRadius: 50,
-          borderWidth: 1,
-          borderColor: Colors.gray200, 
-          paddingBottom: 10,
-          paddingTop: 5,
-          // Shadow
-          shadowColor: "rgba(0, 0, 0, 0.25)",
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 1,
-          shadowRadius: 4,
-          elevation: 4,
           borderTopWidth: 1,
+          borderTopColor: Colors.gray200, 
+          paddingBottom: 25,
+          paddingTop: 10,
+
+          // Shadow
+          shadowColor: "rgba(0, 0, 0, 0.2)",
+          shadowOffset: { width: 0, height: -6 },
+          shadowOpacity: 1,
+          shadowRadius: 12,
+          elevation: 20,
         },
         tabBarLabelStyle: {
           fontFamily: "AlmaraiBold",

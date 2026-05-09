@@ -11,13 +11,13 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <HomePageContent/>
-      <Link
+      {/* <Link
         href="/auth"
         style={styles.authLink}
         
       >
         Go to auth
-      </Link>
+      </Link> */}
     </View>
   );
 }
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   authLink: {
     color: "red",
-    margin: 50,
+    // margin: 50,
     fontSize: 20,
     textAlign: "center",
   },

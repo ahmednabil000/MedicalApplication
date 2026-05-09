@@ -1,14 +1,115 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Dimensions, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
 import { Colors } from '@/constants/theme'
 import { LinearGradient } from 'expo-linear-gradient';
 import { ICONS } from '@/constants/icons';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 
+const { width } = Dimensions.get('window');
+const CAROUSEL_WIDTH = width - 20;
+
+const AD_DATA = [
+  {
+    id: '1',
+    title: 'رعاية طبية منزلية',
+    description: 'احصل على أفضل الخدمات الطبية في منزلك مع نخبة من الأطباء المتخصصين',
+    image: require('../../../assets/images/ad-home-service.png'),
+  },
+  {
+    id: '2',
+    title: 'تحاليل طبية سريعة',
+    description: 'نوفر لك خدمة سحب العينات والتحاليل من منزلك بدقة وعناية فائقة',
+    image: require('../../../assets/images/ad-lab-test.png'),
+  },
+  {
+    id: '3',
+    title: 'صحة عائلتك أولويتنا',
+    description: 'فريق طبي متكامل لرعاية جميع أفراد أسرتك على مدار الساعة وبأعلى جودة',
+    image: require('../../../assets/images/ad-family-health.png'),
+  },
+];
+
 export default function HomePageContent() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const flatListRef = useRef<FlatList>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = (activeIndex + 1) % AD_DATA.length;
+      flatListRef.current?.scrollToIndex({
+        index: nextIndex,
+        animated: true,
+      });
+      setActiveIndex(nextIndex);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [activeIndex]);
+
+  const renderAdItem = ({ item }: { item: typeof AD_DATA[0] }) => (
+    <View style={styles.adSlide}>
+      <LinearGradient
+        colors={[Colors.main, Colors.secondary]}
+        style={styles.adGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <View style={styles.adContent}>
+          <View style={styles.adTextContainer}>
+            <Text style={styles.adTitle}>{item.title}</Text>
+            <Text style={styles.adDescription}>{item.description}</Text>
+          </View>
+          <Image source={item.image} style={styles.adImage} contentFit="contain" />
+        </View>
+      </LinearGradient>
+    </View>
+  );
+
+  const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
+    if (viewableItems.length > 0) {
+      setActiveIndex(viewableItems[0].index);
+    }
+  }).current;
+
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50
+  }).current;
+
   return (
-    <View style={styles.container}>
+    <ScrollView 
+      style={styles.mainScroll} 
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
+      {/* Advertisement Carousel */}
+      <View style={styles.carouselContainer}>
+        <FlatList
+          ref={flatListRef}
+          data={AD_DATA}
+          renderItem={renderAdItem}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewabilityConfig}
+          keyExtractor={(item) => item.id}
+          snapToAlignment="center"
+          decelerationRate="fast"
+        />
+        <View style={styles.paginationDots}>
+          {AD_DATA.map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.dot,
+                activeIndex === index && styles.activeDot
+              ]}
+            />
+          ))}
+        </View>
+      </View>
+
         {/* next reservation card */}
       <LinearGradient
         colors={[Colors.main, Colors.secondary]}
@@ -40,6 +141,8 @@ export default function HomePageContent() {
                 </View>
             </View>
       </LinearGradient>
+
+      
       {/* our services section */}
 
       <View style={styles.ourServicesContainer}>
@@ -124,16 +227,86 @@ export default function HomePageContent() {
         </Link>
 
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  mainScroll: {
+    flex: 1,
+    backgroundColor: Colors.gray10,
+    // marginBottom: 80
+    
+  },
   container:{
-    flex:1,
-    backgroundColor:Colors.gray10,
     padding:10,
-    gap:20
+    paddingTop: 10,
+    gap:15
+  },
+  carouselContainer: {
+    width: '100%',
+    height: 180,
+    marginBottom: 5,
+  },
+  adSlide: {
+    width: CAROUSEL_WIDTH,
+    height: 180,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  adGradient: {
+    flex: 1,
+    padding: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  adContent: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  adTextContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    gap: 8,
+  },
+  adTitle: {
+    fontFamily: 'AlmaraiBold',
+    fontSize: 20,
+    color: Colors.white,
+    textAlign: 'left',
+  },
+  adDescription: {
+    fontFamily: 'AlmaraiBold',
+    fontSize: 14,
+    color: Colors.white,
+    opacity: 0.9,
+    textAlign: 'left',
+    lineHeight: 20,
+  },
+  adImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 15,
+  },
+  paginationDots: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 10,
+    alignSelf: 'center',
+    gap: 6,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+  },
+  activeDot: {
+    width: 20,
+    backgroundColor: Colors.white,
   },
     nextReservationCard:{
 flexDirection: "row",
@@ -219,6 +392,7 @@ borderRadius:10,
         justifyContent: "center",
         alignItems: "center",
         padding: 12,
+        // borderRadius: 12,
     },
     serviceCardImage: {
         width: 45,
