@@ -8,7 +8,7 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 
 // Conditional import for MapView to prevent crashes on unsupported platforms
 let MapView: any;
@@ -43,6 +43,8 @@ export default function LocationPickerModal({
   onSelect,
   initialLocation,
 }: Props) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
     initialLocation || null
   );
@@ -110,7 +112,7 @@ export default function LocationPickerModal({
             <Text
               style={[
                 styles.confirmText,
-                !selectedLocation && { color: Colors.gray300 },
+                !selectedLocation && { color: colors.gray300 },
               ]}
             >
               تأكيد
@@ -134,10 +136,10 @@ export default function LocationPickerModal({
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
   },
   header: {
     flexDirection: "row",
@@ -146,14 +148,14 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingHorizontal: 20,
     paddingBottom: 15,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.gray100,
+    borderBottomColor: colors.gray100,
   },
   title: {
     fontFamily: "AlmaraiBold",
     fontSize: 16,
-    color: Colors.gray700,
+    color: colors.gray700,
   },
   cancelText: {
     fontFamily: "AlmaraiRegular",
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
   confirmText: {
     fontFamily: "AlmaraiBold",
     fontSize: 14,
-    color: Colors.main,
+    color: colors.main,
   },
   map: {
     flex: 1,
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
     bottom: 30,
     left: 20,
     right: 20,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     padding: 20,
     borderRadius: 15,
     shadowColor: "#000",
@@ -198,14 +200,14 @@ const styles = StyleSheet.create({
   locationInfo: {
     fontFamily: "AlmaraiBold",
     fontSize: 14,
-    color: Colors.gray700,
+    color: colors.gray700,
     textAlign: "center",
     marginBottom: 5,
   },
   hint: {
     fontFamily: "AlmaraiRegular",
     fontSize: 12,
-    color: Colors.gray400,
+    color: colors.gray400,
     textAlign: "center",
   },
 });

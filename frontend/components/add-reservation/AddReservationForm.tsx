@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import BasicInput from "../BasicInput";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import BasicButton from "../BasicButton";
 import { ICONS } from "@/constants/icons";
 
@@ -35,6 +35,8 @@ try {
 }
 
 export default function AddReservationForm() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [showTimePicker, setShowTimePicker] = React.useState(false);
   const [showMap, setShowMap] = React.useState(false);
@@ -294,7 +296,7 @@ export default function AddReservationForm() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   inputsContainer: {
     flex: 1,
   },
@@ -318,6 +320,6 @@ const styles = StyleSheet.create({
     fontFamily: "AlmaraiRegular",
     fontSize: 12,
     lineHeight: 20,
-    color: Colors.main,
+    color: colors.main,
   },
 });

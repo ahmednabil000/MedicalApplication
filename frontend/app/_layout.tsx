@@ -1,4 +1,5 @@
-import { Colors } from "@/constants/theme";
+
+import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
 import { Stack } from "expo-router";
 import { StatusBar, View, Text, ActivityIndicator } from "react-native";
 import "react-native-reanimated";
@@ -9,7 +10,8 @@ export const unstable_settings = {
   anchor: "(tabs)",
 };
 
-export default function RootLayout() {
+function RootLayoutInner() {
+  const { colors } = useTheme();
   const [fontLoaded] = useFonts({
     ElMessiri: require("../assets/fonts/messiri.ttf"),
     AlmaraiRegular: require("../assets/fonts/Almarai-Regular.ttf"),
@@ -23,15 +25,15 @@ export default function RootLayout() {
       <View
         style={{
           flex: 1,
-          backgroundColor: Colors.main,
+          backgroundColor: colors.main,
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <ActivityIndicator size="large" color={Colors.white} />
+        <ActivityIndicator size="large" color={colors.white} />
         <Text
           style={{
-            color: Colors.white,
+            color: colors.white,
             marginTop: 16,
             fontSize: 16,
             fontFamily: "System",
@@ -49,7 +51,7 @@ export default function RootLayout() {
         <Stack
           screenOptions={{
             contentStyle: {
-              backgroundColor: Colors.gray10,
+              backgroundColor: colors.gray10,
             },
           }}
         >
@@ -87,9 +89,17 @@ export default function RootLayout() {
       </SafeAreaProvider>
       <StatusBar
         barStyle="light-content"
-        backgroundColor={Colors.main}
+        backgroundColor={colors.main}
         // hidden
       />
     </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <RootLayoutInner />
+    </ThemeProvider>
   );
 }

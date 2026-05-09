@@ -8,7 +8,7 @@ import {
   Platform,
 } from "react-native";
 import React, { useState } from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
@@ -16,7 +16,8 @@ import { useRouter } from "expo-router";
 export default function Settings() {
   const router = useRouter();
   const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { colors, isDarkMode, toggleTheme } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   const toggleSection = (section: string) => {
@@ -36,8 +37,8 @@ export default function Settings() {
     value,
     isSwitch,
     onValueChange,
-    color = Colors.main,
-    textColor = Colors.gray700,
+    color = colors.main,
+    textColor = colors.gray700,
     isExpanded,
   }: {
     icon: any;
@@ -68,14 +69,14 @@ export default function Settings() {
         <Switch
           value={value}
           onValueChange={onValueChange}
-          trackColor={{ false: Colors.gray200, true: Colors.main + "80" }}
-          thumbColor={value ? Colors.main : Colors.gray400}
+          trackColor={{ false: colors.gray200, true: colors.main + "80" }}
+          thumbColor={value ? colors.main : colors.gray400}
         />
       ) : (
         <Ionicons
           name={isExpanded ? "chevron-down" : "chevron-back"}
           size={18}
-          color={Colors.gray400}
+          color={colors.gray400}
         />
       )}
     </TouchableOpacity>
@@ -106,7 +107,7 @@ export default function Settings() {
               <Text style={styles.profilePhone}>{user.phone}</Text>
             </View>
             <TouchableOpacity style={styles.editButton} activeOpacity={0.8}>
-              <Ionicons name="create-outline" size={20} color={Colors.white} />
+              <Ionicons name="create-outline" size={20} color={colors.white} />
             </TouchableOpacity>
           </View>
         </View>
@@ -134,7 +135,7 @@ export default function Settings() {
               title="الوضع الليلي"
               isSwitch
               value={isDarkMode}
-              onValueChange={setIsDarkMode}
+              onValueChange={toggleTheme}
             />
           </View>
         </View>
@@ -177,15 +178,15 @@ export default function Settings() {
             {expandedSection === "contact" && (
               <View style={styles.expandedContent}>
                 <View style={styles.contactItem}>
-                  <Ionicons name="call" size={16} color={Colors.main} />
+                  <Ionicons name="call" size={16} color={colors.main} />
                   <Text style={styles.expandedText}>01012345678</Text>
                 </View>
                 <View style={styles.contactItem}>
-                  <Ionicons name="mail" size={16} color={Colors.main} />
+                  <Ionicons name="mail" size={16} color={colors.main} />
                   <Text style={styles.expandedText}>support@salamat.com</Text>
                 </View>
                 <View style={styles.contactItem}>
-                  <Ionicons name="location" size={16} color={Colors.main} />
+                  <Ionicons name="location" size={16} color={colors.main} />
                   <Text style={styles.expandedText}>
                     القاهرة، جمهورية مصر العربية
                   </Text>
@@ -257,8 +258,8 @@ export default function Settings() {
               icon="log-out-outline"
               title="تسجيل الخروج"
               onPress={() => {}}
-              color={Colors.reject}
-              textColor={Colors.reject}
+              color={colors.reject}
+              textColor={colors.reject}
             />
           </View>
         </View>
@@ -271,16 +272,16 @@ export default function Settings() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: Colors.gray10,
+    backgroundColor: colors.gray10,
   },
   scrollContent: {
     paddingBottom: 40,
   },
   header: {
-    backgroundColor: Colors.main,
+    backgroundColor: colors.main,
     paddingTop: Platform.OS === "ios" ? 60 : 40,
     paddingBottom: 30,
     paddingHorizontal: 20,
@@ -290,7 +291,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontFamily: "AlmaraiBold",
-    color: Colors.white,
+    color: colors.white,
 
     marginBottom: 20,
   },
@@ -308,8 +309,8 @@ const styles = StyleSheet.create({
     maxHeight: 60,
     borderRadius: 1000,
     borderWidth: 3,
-    borderColor: Colors.secondary,
-    backgroundColor: Colors.main,
+    borderColor: colors.secondary,
+    backgroundColor: colors.main,
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 15,
@@ -325,7 +326,7 @@ const styles = StyleSheet.create({
   profileName: {
     fontSize: 18,
     fontFamily: "AlmaraiBold",
-    color: Colors.white,
+    color: colors.white,
   },
   profilePhone: {
     fontSize: 14,
@@ -348,13 +349,13 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontSize: 16,
     fontFamily: "AlmaraiBold",
-    color: Colors.gray700,
+    color: colors.gray700,
     marginBottom: 10,
 
     paddingRight: 5,
   },
   card: {
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     borderRadius: 20,
     overflow: "hidden",
     ...Platform.select({
@@ -391,11 +392,11 @@ const styles = StyleSheet.create({
   settingItemTitle: {
     fontSize: 14,
     fontFamily: "AlmaraiRegular",
-    color: Colors.gray700,
+    color: colors.gray700,
   },
   separator: {
     height: 1,
-    backgroundColor: Colors.gray10,
+    backgroundColor: colors.gray10,
     marginHorizontal: 15,
   },
   footer: {
@@ -405,32 +406,32 @@ const styles = StyleSheet.create({
   versionText: {
     fontSize: 12,
     fontFamily: "AlmaraiRegular",
-    color: Colors.gray400,
+    color: colors.gray400,
   },
   expandedContent: {
     paddingHorizontal: 20,
     paddingVertical: 15,
-    backgroundColor: Colors.gray10,
+    backgroundColor: colors.gray10,
     borderTopWidth: 1,
-    borderTopColor: Colors.gray200,
+    borderTopColor: colors.gray200,
   },
   expandedQuestion: {
     fontFamily: "AlmaraiBold",
     fontSize: 14,
-    color: Colors.main,
+    color: colors.main,
     marginBottom: 5,
   },
   expandedAnswer: {
     fontFamily: "AlmaraiRegular",
     fontSize: 13,
-    color: Colors.gray700,
+    color: colors.gray700,
     marginBottom: 15,
     lineHeight: 20,
   },
   expandedText: {
     fontFamily: "AlmaraiRegular",
     fontSize: 13,
-    color: Colors.gray700,
+    color: colors.gray700,
     lineHeight: 22,
   },
   contactItem: {

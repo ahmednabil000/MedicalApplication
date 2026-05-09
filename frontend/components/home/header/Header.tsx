@@ -2,9 +2,12 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import Notifications from "./Notifications";
 import ProfileData from "./ProfileData";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Header() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
+
   return (
     <View style={styles.container}>
       <ProfileData />
@@ -13,7 +16,7 @@ export default function Header() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
@@ -21,6 +24,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     maxHeight: 60,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
   },
 });

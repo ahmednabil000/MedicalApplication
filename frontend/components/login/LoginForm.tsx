@@ -4,10 +4,13 @@ import BasicInput from "../BasicInput";
 import PhoneIcon from "../../assets/icons/phone.svg";
 import PasswordIcon from "../../assets/icons/password.svg";
 import BasicButton from "../BasicButton";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Link } from "expo-router";
 
 export default function LoginForm() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
+
   return (
     <View style={styles.inputsAndButtonContainer}>
       <View style={styles.inputsContainer}>
@@ -37,7 +40,7 @@ export default function LoginForm() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   inputsContainer: {
     gap: 20,
     flex: 1,
@@ -59,6 +62,6 @@ const styles = StyleSheet.create({
     fontFamily: "AlmaraiRegular",
     fontSize: 12,
     lineHeight: 20,
-    color: Colors.main,
+    color: colors.main,
   },
 });

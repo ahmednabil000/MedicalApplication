@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Image } from "expo-image";
 import LoginFormContent from "@/components/login/LoginFormContent";
 
 export default function AuthScreen() {
   const [isSignup, setIsSignup] = useState<boolean>(false);
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,10 +32,10 @@ export default function AuthScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.main,
+    backgroundColor: colors.main,
     gap: 20,
   },
   pageHeaderContainer: {
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
     height: 18,
   },
   logoText: {
-    color: Colors.white,
+    color: colors.white,
     fontFamily: "ElMessiri",
     flexShrink: 0,
     textAlign: "left",
@@ -70,14 +72,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   pageTitleText: {
-    color: Colors.white,
+    color: colors.white,
     fontFamily: "AlmaraiBold",
     flexShrink: 0,
     textAlign: "left",
     fontSize: 36,
   },
   pageSubtitleText: {
-    color: Colors.white,
+    color: colors.white,
     fontFamily: "AlmaraiRegular",
     flexShrink: 0,
     textAlign: "left",

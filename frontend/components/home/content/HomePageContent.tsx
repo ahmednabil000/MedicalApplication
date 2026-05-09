@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { LinearGradient } from "expo-linear-gradient";
 import { ICONS } from "@/constants/icons";
 import { Image } from "expo-image";
@@ -42,6 +42,8 @@ const AD_DATA = [
 ];
 
 export default function HomePageContent() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
@@ -61,7 +63,7 @@ export default function HomePageContent() {
   const renderAdItem = ({ item }: { item: (typeof AD_DATA)[0] }) => (
     <View style={styles.adSlide}>
       <LinearGradient
-        colors={[Colors.main, Colors.secondary]}
+        colors={[colors.main, colors.secondary]}
         style={styles.adGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
@@ -124,7 +126,7 @@ export default function HomePageContent() {
 
       {/* next reservation card */}
       <LinearGradient
-        colors={[Colors.main, Colors.secondary]}
+        colors={[colors.main, colors.secondary]}
         style={styles.nextReservationCard}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
@@ -174,7 +176,7 @@ export default function HomePageContent() {
             style={styles.serviceCardContainer}
           >
             <LinearGradient
-              colors={[Colors.main, Colors.secondary]}
+              colors={[colors.main, colors.secondary]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
               style={styles.serviceCard}
@@ -206,7 +208,7 @@ export default function HomePageContent() {
             style={styles.serviceCardContainer}
           >
             <LinearGradient
-              colors={[Colors.main, Colors.secondary]}
+              colors={[colors.main, colors.secondary]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
               style={styles.serviceCard}
@@ -238,7 +240,7 @@ export default function HomePageContent() {
             style={styles.serviceCardContainer}
           >
             <LinearGradient
-              colors={[Colors.main, Colors.secondary]}
+              colors={[colors.main, colors.secondary]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
               style={styles.serviceCard}
@@ -261,10 +263,10 @@ export default function HomePageContent() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   mainScroll: {
     flex: 1,
-    backgroundColor: Colors.gray10,
+    backgroundColor: colors.gray10,
     // marginBottom: 80
   },
   container: {
@@ -304,13 +306,13 @@ const styles = StyleSheet.create({
   adTitle: {
     fontFamily: "AlmaraiBold",
     fontSize: 20,
-    color: Colors.white,
+    color: colors.white,
     textAlign: "left",
   },
   adDescription: {
     fontFamily: "AlmaraiBold",
     fontSize: 14,
-    color: Colors.white,
+    color: colors.white,
     opacity: 0.9,
     textAlign: "left",
     lineHeight: 20,
@@ -335,7 +337,7 @@ const styles = StyleSheet.create({
   },
   activeDot: {
     width: 20,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
   },
   nextReservationCard: {
     flexDirection: "row",
@@ -352,11 +354,11 @@ const styles = StyleSheet.create({
   reservationTitle: {
     fontFamily: "AlmaraiBold",
     fontSize: 20,
-    color: Colors.white,
+    color: colors.white,
   },
   statusLabelContainer: {
     borderRadius: 5,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     padding: 5,
     gap: 5,
     flexDirection: "row",
@@ -365,7 +367,7 @@ const styles = StyleSheet.create({
   statusLabelText: {
     fontFamily: "AlmaraiBold",
     fontSize: 14,
-    color: Colors.secondary,
+    color: colors.secondary,
   },
   reservationDetailsContainer: {
     alignItems: "flex-start",
@@ -380,12 +382,12 @@ const styles = StyleSheet.create({
   detailsLabelText: {
     fontFamily: "AlmaraiBold",
     fontSize: 14,
-    color: Colors.white,
+    color: colors.white,
   },
   newSectionTitle: {
     fontFamily: "AlmaraiBold",
     fontSize: 20,
-    color: Colors.gray700,
+    color: colors.gray700,
   },
   ourServicesContainer: {
     width: "100%",
@@ -417,7 +419,7 @@ const styles = StyleSheet.create({
   serviceCardImageContainer: {
     width: 70,
     height: 70,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     justifyContent: "center",
     alignItems: "center",
     padding: 12,
@@ -431,7 +433,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: "AlmaraiBold",
     fontSize: 16,
-    color: Colors.white,
+    color: colors.white,
     textAlign: "left",
   },
 });

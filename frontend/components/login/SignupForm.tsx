@@ -5,7 +5,7 @@ import PhoneIcon from "../../assets/icons/phone.svg";
 import PasswordIcon from "../../assets/icons/password.svg";
 import NameIcon from "../../assets/icons/name.svg";
 import BasicButton from "../BasicButton";
-import { Colors } from "@/constants/theme";
+
 import { Link } from "expo-router";
 
 export default function SignupForm() {

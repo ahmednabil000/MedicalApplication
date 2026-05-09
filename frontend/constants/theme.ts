@@ -31,7 +31,7 @@ type ColorsType = {
 const tintColorLight = "#0a7ea4";
 const tintColorDark = "#fff";
 
-export const Colors: ColorsType = {
+export const lightColors: ColorsType = {
   main: "#018BBB",
   secondary: "#36BDEB",
   mainGradient: "",
@@ -53,6 +53,31 @@ export const Colors: ColorsType = {
   gray900: "#111827",
   gray950: "#030712",
 };
+
+export const darkColors: ColorsType = {
+  main: "#018BBB",
+  secondary: "#36BDEB",
+  mainGradient: "",
+  white: "#1F2937",
+  black: "#FFFFFF",
+  accept: "#00C53B",
+  pending: "#FFCF10",
+  reject: "#F43B3B",
+  gray10: "#111827",
+  gray50: "#1F2937",
+  gray100: "#374151",
+  gray200: "#4B5563",
+  gray300: "#6B7280",
+  gray400: "#9CA3AF",
+  gray500: "#D1D5DB",
+  gray600: "#E5E7EB",
+  gray700: "#F3F4F6",
+  gray800: "#F9FCFE",
+  gray900: "#F4F7FE",
+  gray950: "#FFFFFF",
+};
+
+export const Colors = lightColors;
 
 export const Fonts = Platform.select({
   ios: {

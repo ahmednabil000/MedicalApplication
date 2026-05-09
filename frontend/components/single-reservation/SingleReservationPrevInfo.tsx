@@ -7,10 +7,13 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { ICONS } from "@/constants/icons";
 
 export default function SingleReservationPrevInfo() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
+
   const makePhoneCall = () => {
     const phoneNumber = "01061174403";
     const url = `tel:${phoneNumber}`;
@@ -65,13 +68,13 @@ export default function SingleReservationPrevInfo() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     paddingVertical: 10,
     gap: 10,
     borderRadius: 10,
-    shadowColor: Colors.gray200,
+    shadowColor: colors.gray200,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
@@ -84,14 +87,14 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   infoTitleLabel: {
-    backgroundColor: Colors.main,
+    backgroundColor: colors.main,
     paddingHorizontal: 15,
     paddingVertical: 8,
     borderBottomRightRadius: 20,
     borderTopRightRadius: 20,
   },
   infoTitleLabelText: {
-    color: Colors.white,
+    color: colors.white,
     fontFamily: "AlmaraiBold",
     fontSize: 14,
   },
@@ -99,18 +102,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    backgroundColor: Colors.accept,
+    backgroundColor: colors.accept,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
-    shadowColor: Colors.gray200,
+    shadowColor: colors.gray200,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 3,
   },
   contactButtonText: {
-    color: Colors.white,
+    color: colors.white,
     fontFamily: "AlmaraiBold",
     fontSize: 12,
   },
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   detailsInfoContainerText: {
-    color: Colors.gray700,
+    color: colors.gray700,
     fontFamily: "AlmaraiRegular",
     fontSize: 12,
     lineHeight: 20,

@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import React, { useState } from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { ICONS } from "@/constants/icons";
 
 interface Option {
@@ -35,6 +35,8 @@ export default function BasicSelectInput({
   onSelect,
   error,
 }: Props) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
   const [modalVisible, setModalVisible] = useState(false);
 
   const selectedOption = options.find((opt) => opt.value === value);
@@ -59,7 +61,7 @@ export default function BasicSelectInput({
           <Text
             style={[
               styles.selectedText,
-              !selectedOption && { color: Colors.gray400 },
+              !selectedOption && { color: colors.gray400 },
             ]}
           >
             {selectedOption ? selectedOption.label : placeholder}
@@ -120,12 +122,12 @@ export default function BasicSelectInput({
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   otterInputContainer: {
     gap: 10,
   },
   inputLabel: {
-    color: Colors.gray700,
+    color: colors.gray700,
     fontFamily: "AlmaraiRegular",
     fontSize: 12,
   },
@@ -135,9 +137,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     height: 50,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     borderWidth: 1,
-    borderColor: Colors.gray200,
+    borderColor: colors.gray200,
     borderRadius: 10,
   },
   iconAndInputContainer: {
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
     fontFamily: "AlmaraiRegular",
    
     fontSize: 14,
-    color: Colors.gray700,
+    color: colors.gray700,
   },
   arrowIcon: {
     paddingRight: 5,
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalContent: {
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingBottom: 40,
@@ -179,19 +181,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.gray100,
+    borderBottomColor: colors.gray100,
   },
   modalIndicator: {
     width: 40,
     height: 5,
-    backgroundColor: Colors.gray200,
+    backgroundColor: colors.gray200,
     borderRadius: 10,
     marginBottom: 10,
   },
   modalTitle: {
     fontFamily: "AlmaraiBold",
     fontSize: 16,
-    color: Colors.gray700,
+    color: colors.gray700,
   },
   optionsList: {
     paddingHorizontal: 20,
@@ -203,10 +205,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.gray50,
+    borderBottomColor: colors.gray50,
   },
   activeOption: {
-    backgroundColor: Colors.gray10,
+    backgroundColor: colors.gray10,
     borderRadius: 8,
     paddingHorizontal: 10,
     marginHorizontal: -10,
@@ -214,10 +216,10 @@ const styles = StyleSheet.create({
   optionText: {
     fontFamily: "AlmaraiRegular",
     fontSize: 14,
-    color: Colors.gray700,
+    color: colors.gray700,
   },
   activeOptionText: {
     fontFamily: "AlmaraiBold",
-    color: Colors.main,
+    color: colors.main,
   },
 });

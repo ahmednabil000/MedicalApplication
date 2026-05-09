@@ -1,6 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import EyeIcon from "../assets/icons/eye.svg";
 import EyeLinedIcon from "../assets/icons/eye-lined.svg";
 
@@ -41,6 +41,8 @@ export default function BasicInput({
   error,
   onPress,
 }: BasicInputProps) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
   const [showPassword, setShowPassword] = useState<boolean>(secureTextEntry);
 
   const InputComponent = (
@@ -60,7 +62,7 @@ export default function BasicInput({
         {icon}
         <TextInput
           placeholder={placeholder}
-          placeholderTextColor={Colors.gray400}
+          placeholderTextColor={colors.gray400}
           keyboardType={keyboardType}
           secureTextEntry={showPassword}
           value={value}
@@ -100,12 +102,12 @@ export default function BasicInput({
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   otterInputContainer: {
     gap: 10,
   },
   inputLabel: {
-    color: Colors.gray700,
+    color: colors.gray700,
     fontFamily: "AlmaraiRegular",
     fontSize: 12,
   },
@@ -115,9 +117,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     gap: 10,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     borderWidth: 1,
-    borderColor: Colors.gray200,
+    borderColor: colors.gray200,
     borderRadius: 10,
     minHeight: 50,
   },
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     direction: "rtl",
     fontFamily: "AlmaraiRegular",
     textAlign: "right",
-    color: Colors.gray700,
+    color: colors.gray700,
     height: "100%",
   },
   errorText: {

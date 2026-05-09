@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { Colors } from '@/constants/theme'
+import { useTheme } from '@/contexts/ThemeContext'
 import { ICONS } from '@/constants/icons'
 import { useRouter } from 'expo-router'
 
@@ -10,8 +10,9 @@ interface Props {
 }
 
 export default function SinglePagesHeader({title}:Props) {
-
-const router = useRouter()
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
+  const router = useRouter()
 
   return (
     <View style={styles.container}>
@@ -25,12 +26,12 @@ const router = useRouter()
   )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
     container:{
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor:Colors.white,
+        backgroundColor:colors.white,
         paddingHorizontal:15,
         paddingVertical:10,
         gap:10
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     text:{
         fontFamily: "AlmaraiBold",
         fontSize: 14,
-        color: Colors.gray700,
+        color: colors.gray700,
         marginRight:-20,
         textAlign: "center",
     },

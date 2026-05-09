@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { ICONS } from "@/constants/icons";
 
 export default function SingleReservationPriceInfo() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -16,7 +19,7 @@ export default function SingleReservationPriceInfo() {
         <View style={styles.priceWarningCard}>
           <View style={styles.priceWarningHeader}>
             <Text style={styles.priceWarningTitle}>السعر النهائي غير ثابت</Text>
-            <ICONS.note width={20} height={20} fill={Colors.main} />
+            <ICONS.note width={20} height={20} fill={colors.main} />
           </View>
 
           <Text style={styles.priceWarningDescription}>
@@ -63,12 +66,12 @@ export default function SingleReservationPriceInfo() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     paddingVertical: 15,
     borderRadius: 16,
-    shadowColor: Colors.black,
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
@@ -82,14 +85,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   infoTitleLabel: {
-    backgroundColor: Colors.main,
+    backgroundColor: colors.main,
     paddingHorizontal: 15,
     paddingVertical: 8,
     borderBottomRightRadius: 20,
     borderTopRightRadius: 20,
   },
   infoTitleLabelText: {
-    color: Colors.white,
+    color: colors.white,
     fontFamily: "AlmaraiBold",
     fontSize: 14,
   },
@@ -98,11 +101,11 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   priceWarningCard: {
-    backgroundColor: Colors.gray10,
+    backgroundColor: colors.gray10,
     borderRadius: 12,
     padding: 15,
     borderRightWidth: 4,
-    borderRightColor: Colors.main,
+    borderRightColor: colors.main,
   },
   priceWarningHeader: {
     flexDirection: "row",
@@ -112,12 +115,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   priceWarningTitle: {
-    color: Colors.main,
+    color: colors.main,
     fontFamily: "AlmaraiBold",
     fontSize: 15,
   },
   priceWarningDescription: {
-    color: Colors.gray700,
+    color: colors.gray700,
     fontFamily: "AlmaraiRegular",
     fontSize: 13,
     lineHeight: 22,
@@ -127,7 +130,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   factorsTitle: {
-    color: Colors.gray800,
+    color: colors.gray800,
     fontFamily: "AlmaraiBold",
     fontSize: 13,
     marginBottom: 5,
@@ -143,21 +146,21 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: Colors.main,
+    backgroundColor: colors.main,
   },
   factorText: {
-    color: Colors.gray600,
+    color: colors.gray600,
     fontFamily: "AlmaraiRegular",
     fontSize: 12,
   },
   footerNote: {
     paddingTop: 5,
     borderTopWidth: 1,
-    borderTopColor: Colors.gray100,
+    borderTopColor: colors.gray100,
     marginTop: 5,
   },
   footerNoteText: {
-    color: Colors.gray500,
+    color: colors.gray500,
     fontFamily: "AlmaraiRegular",
     fontSize: 11,
     fontStyle: "italic",

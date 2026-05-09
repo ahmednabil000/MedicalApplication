@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Colors } from '@/constants/theme'
+import { useTheme } from '@/contexts/ThemeContext'
 import { Image } from 'expo-image'
 
 export default function ProfileData() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -21,7 +24,7 @@ export default function ProfileData() {
   )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
@@ -37,8 +40,8 @@ const styles = StyleSheet.create({
     borderRadius: 1000,
     padding: 20,
     borderWidth: 3,
-    borderColor: Colors.secondary,
-    backgroundColor: Colors.main,
+    borderColor: colors.secondary,
+    backgroundColor: colors.main,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -54,12 +57,12 @@ const styles = StyleSheet.create({
   },
   profileWelcomeText: {
     fontSize: 10,
-    color: Colors.gray400,
+    color: colors.gray400,
     fontFamily: "AlmaraiRegular",
   },
   profileName: {
     fontSize: 12,
-    color: Colors.gray700,
+    color: colors.gray700,
     fontFamily: "AlmaraiBold",
   },
 })

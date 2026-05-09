@@ -5,10 +5,12 @@ import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import Header from "@/components/home/header/Header";
 import { ICONS } from "@/constants/icons";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { View } from "react-native";
 
 export default function TabLayout() {
+  const { colors } = useTheme();
+
   return (
     <>
       <Header />
@@ -17,8 +19,8 @@ export default function TabLayout() {
           headerShown: false,
 
           tabBarShowLabel: true,
-          tabBarActiveTintColor: Colors.main,
-          tabBarInactiveTintColor: Colors.gray400,
+          tabBarActiveTintColor: colors.main,
+          tabBarInactiveTintColor: colors.gray400,
 
           tabBarIconStyle: {
             marginBottom: 5,
@@ -26,9 +28,9 @@ export default function TabLayout() {
           tabBarStyle: {
             width: "100%",
             height: 80,
-            backgroundColor: Colors.white,
+            backgroundColor: colors.white,
             borderTopWidth: 1,
-            borderTopColor: Colors.gray200,
+            borderTopColor: colors.gray200,
             paddingBottom: 25,
             paddingTop: 10,
 

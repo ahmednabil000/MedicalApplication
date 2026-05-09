@@ -3,9 +3,11 @@ import React from 'react';
 import SinglePagesHeader from '@/components/SinglePagesHeader';
 import { useLocalSearchParams } from 'expo-router';
 import AddReservationForm from '@/components/add-reservation/AddReservationForm';
-import { Colors } from '@/constants/theme';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const AddReservationScreen = () => {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
   const params = useLocalSearchParams();
   
   return (
@@ -20,13 +22,13 @@ const AddReservationScreen = () => {
 
 export default AddReservationScreen;
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   outerContainer: {
     flex: 1,
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.gray10,
+    backgroundColor: colors.gray10,
     padding: 20,
   },
 });

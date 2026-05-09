@@ -1,12 +1,15 @@
 import { View, StyleSheet } from "react-native";
+import React from "react";
 import { Link, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import HomePageContent from "@/components/home/content/HomePageContent";
 
 export default function HomeScreen() {
   const router = useRouter();
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
 
   return (
     <View style={styles.container}>
@@ -22,10 +25,10 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
+    backgroundColor: colors.black,
   },
   authLink: {
     color: "red",

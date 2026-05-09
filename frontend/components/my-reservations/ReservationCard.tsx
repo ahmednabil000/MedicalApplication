@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   Alert,
 } from "react-native";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { LinearGradient } from "expo-linear-gradient";
 import { ICONS } from "@/constants/icons";
 import { Link } from "expo-router";
@@ -45,6 +45,8 @@ export default function ReservationCard({
   phone,
   address,
 }: props) {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
   const [isActionMenuVisible, setIsActionMenuVisible] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const iconRef = useRef<View>(null);
@@ -87,21 +89,21 @@ export default function ReservationCard({
     switch (status) {
       case "ACCEPTED":
         return {
-          color: Colors.accept,
+          color: colors.accept,
           icon: <ICONS.ACCEPT />,
           label: "تمت الموافقة",
         };
 
       case "PENDING":
         return {
-          color: Colors.pending,
+          color: colors.pending,
           icon: <ICONS.PENDING />,
           label: "قيد الانتظار",
         };
 
       case "REJECTED":
         return {
-          color: Colors.reject,
+          color: colors.reject,
           icon: <ICONS.REJECTED />,
           label: "مرفوض",
         };
@@ -110,7 +112,7 @@ export default function ReservationCard({
 
   return (
     <LinearGradient
-      colors={[Colors.main, Colors.secondary]}
+      colors={[colors.main, colors.secondary]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={styles.reservationsCard}
@@ -278,7 +280,7 @@ export default function ReservationCard({
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   reservationsCard: {
     paddingVertical: 10,
 
@@ -298,13 +300,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 10,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.gray300,
+    borderBottomColor: colors.gray300,
     borderStyle: "dashed",
   },
   reservationsCardHeaderTitle: {
     fontFamily: "AlmaraiBold",
     fontSize: 18,
-    color: Colors.white,
+    color: colors.white,
   },
   statusAndActionsMenuContainer: {
     flexDirection: "row",
@@ -325,7 +327,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
 
     borderStyle: "solid",
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
   },
   statusLabelText: {
     fontFamily: "AlmaraiBold",
@@ -343,7 +345,7 @@ const styles = StyleSheet.create({
   infoLabelText: {
     fontFamily: "AlmaraiBold",
     fontSize: 14,
-    color: Colors.white,
+    color: colors.white,
   },
   dateAndTimesContainer: {
     flex: 1,
@@ -354,7 +356,7 @@ const styles = StyleSheet.create({
   },
   detailsButton: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
@@ -364,7 +366,7 @@ const styles = StyleSheet.create({
   detailsButtonText: {
     fontFamily: "AlmaraiBold",
     fontSize: 14,
-    color: Colors.gray700,
+    color: colors.gray700,
     textAlign: "center",
   },
   actionMenuContainer: {
@@ -382,7 +384,7 @@ const styles = StyleSheet.create({
   },
   actionMenu: {
     position: "absolute",
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     top: 40,
     left: 0,
     padding: 10,
@@ -399,12 +401,12 @@ const styles = StyleSheet.create({
   actionMenuText: {
     fontFamily: "AlmaraiBold",
     fontSize: 12,
-    color: Colors.gray700,
+    color: colors.gray700,
     // textAlign:"center",
   },
   noteContainer: {
     borderTopWidth: 1,
-    borderColor: Colors.white,
+    borderColor: colors.white,
     borderStyle: "dashed",
     paddingVertical: 10,
     gap: 20,
@@ -412,12 +414,12 @@ const styles = StyleSheet.create({
   noteTitleText: {
     fontFamily: "AlmaraiBold",
     fontSize: 16,
-    color: Colors.white,
+    color: colors.white,
   },
   noteLabelText: {
     fontFamily: "AlmaraiRegular",
     fontSize: 14,
-    color: Colors.white,
+    color: colors.white,
     lineHeight: 20,
   },
 });

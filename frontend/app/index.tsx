@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Image } from "expo-image";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import { useRouter } from "expo-router";
@@ -9,6 +9,8 @@ import { useFonts } from "expo-font";
 
 export default function SplashScreen() {
   const router = useRouter();
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
   const [fontLoaded] = useFonts({
     ElMessiri: require("../assets/fonts/messiri.ttf"),
     AlmaraiRegular: require("../assets/fonts/Almarai-Regular.ttf"),
@@ -31,15 +33,15 @@ export default function SplashScreen() {
       <View
         style={{
           flex: 1,
-          backgroundColor: Colors.main,
+          backgroundColor: colors.main,
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <ActivityIndicator size="large" color={Colors.white} />
+        <ActivityIndicator size="large" color={colors.white} />
         <Text
           style={{
-            color: Colors.white,
+            color: colors.white,
             marginTop: 16,
             fontSize: 16,
             fontFamily: "System",
@@ -72,10 +74,10 @@ export default function SplashScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.main,
+    backgroundColor: colors.main,
   },
   contentContainer: {
     flex: 1,
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     height: 150,
   },
   logoText: {
-    color: Colors.white,
+    color: colors.white,
     fontFamily: "ElMessiri",
     fontSize: 56,
     fontWeight: "bold",

@@ -1,11 +1,14 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 import { LinearGradient } from "expo-linear-gradient";
 import { ICONS } from "@/constants/icons";
 import ReservationCard from "./ReservationCard";
 
 export default function MyReservationsContent() {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
+
   return (
     <ScrollView
       style={styles.mainScroll}
@@ -16,7 +19,7 @@ export default function MyReservationsContent() {
       <View style={styles.insightsContainer}>
         <View style={styles.insightsInnerContainer}>
           <LinearGradient
-            colors={[Colors.main, Colors.secondary]}
+            colors={[colors.main, colors.secondary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.insightsCardContainer}
@@ -28,7 +31,7 @@ export default function MyReservationsContent() {
             <ICONS.totalReservationsCard />
           </LinearGradient>
           <LinearGradient
-            colors={[Colors.main, Colors.secondary]}
+            colors={[colors.main, colors.secondary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.insightsCardContainer}
@@ -42,7 +45,7 @@ export default function MyReservationsContent() {
         </View>
         <View style={styles.insightsInnerContainer}>
           <LinearGradient
-            colors={[Colors.main, Colors.secondary]}
+            colors={[colors.main, colors.secondary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.insightsCardContainer}
@@ -54,7 +57,7 @@ export default function MyReservationsContent() {
             <ICONS.acceptReservationsCard />
           </LinearGradient>
           <LinearGradient
-            colors={[Colors.main, Colors.secondary]}
+            colors={[colors.main, colors.secondary]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.insightsCardContainer}
@@ -112,10 +115,10 @@ export default function MyReservationsContent() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   mainScroll: {
     flex: 1,
-    backgroundColor: Colors.gray10,
+    backgroundColor: colors.gray10,
     // marginBottom: 80
   },
   container: {
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
   insightsContainer: {
     gap: 10,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.gray300,
+    borderBottomColor: colors.gray300,
     borderStyle: "dashed",
     paddingBottom: 10,
   },
@@ -153,12 +156,12 @@ const styles = StyleSheet.create({
   insightsCardLabel: {
     fontFamily: "AlmaraiBold",
     fontSize: 18,
-    color: Colors.white,
+    color: colors.white,
   },
   insightsCardValue: {
     fontFamily: "AlmaraiBold",
     fontSize: 16,
-    color: Colors.white,
+    color: colors.white,
   },
   reservationsCardsContainer: {
     gap: 20,

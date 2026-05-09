@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface props {
   label: string;
@@ -8,6 +8,9 @@ interface props {
 }
 
 const BasicButton = ({ label, onPress }: props) => {
+  const { colors } = useTheme();
+  const styles = React.useMemo(() => getStyles(colors), [colors]);
+
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -19,19 +22,19 @@ const BasicButton = ({ label, onPress }: props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     padding: 12,
     gap: 10,
-    backgroundColor: Colors.main,
+    backgroundColor: colors.main,
     borderRadius: 10,
     
   },
   buttonText: {
-    color: Colors.white,
+    color: colors.white,
     fontFamily: "AlmaraiBold",
     fontSize: 14,
     lineHeight: 20,
