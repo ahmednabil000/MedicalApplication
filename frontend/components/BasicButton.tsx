@@ -4,11 +4,16 @@ import { Colors } from "@/constants/theme";
 
 interface props {
   label: string;
+  onPress?: () => void;
 }
 
-const BasicButton = ({ label }: props) => {
+const BasicButton = ({ label, onPress }: props) => {
   return (
-    <TouchableOpacity style={styles.buttonContainer}>
+    <TouchableOpacity
+      activeOpacity={0.9}
+      style={styles.buttonContainer}
+      onPress={onPress}
+    >
       <Text style={styles.buttonText}>{label}</Text>
     </TouchableOpacity>
   );
@@ -23,7 +28,7 @@ const styles = StyleSheet.create({
     gap: 10,
     backgroundColor: Colors.main,
     borderRadius: 10,
-    flex: 1,
+    
   },
   buttonText: {
     color: Colors.white,

@@ -20,6 +20,11 @@ interface BasicInputProps {
   endIcon?: React.ReactElement;
   secureTextEntry?: boolean;
   hasEyeIcon?: boolean;
+  isTextArea?: boolean;
+  value?: string;
+  onChangeText?: (text: string) => void;
+  error?: string;
+  onPress?: () => void;
 }
 
 export default function BasicInput({
@@ -30,37 +35,73 @@ export default function BasicInput({
   secureTextEntry = false,
   endIcon,
   hasEyeIcon = false,
+  isTextArea = false,
+  value,
+  onChangeText,
+  error,
+  onPress,
 }: BasicInputProps) {
   const [showPassword, setShowPassword] = useState<boolean>(secureTextEntry);
+
+  const InputComponent = (
+    <View
+      style={[
+        styles.inputContainer,
+        isTextArea && { alignItems: "flex-start", paddingVertical: 10 },
+        error && { borderColor: "red" },
+      ]}
+    >
+      <View
+        style={[
+          styles.iconAndInputContainer,
+          isTextArea && { alignItems: "flex-start" },
+        ]}
+      >
+        {icon}
+        <TextInput
+          placeholder={placeholder}
+          placeholderTextColor={Colors.gray400}
+          keyboardType={keyboardType}
+          secureTextEntry={showPassword}
+          value={value}
+          onChangeText={onChangeText}
+          editable={!onPress}
+          pointerEvents={onPress ? "none" : "auto"}
+          style={[
+            styles.theInput,
+            isTextArea && { textAlignVertical: "top", height: 80 },
+          ]}
+          multiline={isTextArea}
+          numberOfLines={isTextArea ? 3 : 1}
+          selectTextOnFocus={!secureTextEntry}
+        />
+      </View>
+      {endIcon}
+      {hasEyeIcon && (
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          {showPassword ? <EyeIcon /> : <EyeLinedIcon />}
+        </TouchableOpacity>
+      )}
+    </View>
+  );
 
   return (
     <View style={styles.otterInputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>
-      <View style={styles.inputContainer}>
-        <View style={styles.iconAndInputContainer}>
-          {icon}
-          <TextInput
-            placeholder={placeholder}
-            placeholderTextColor={Colors.gray400}
-            keyboardType={keyboardType}
-            secureTextEntry={showPassword}
-            style={styles.theInput}
-          />
-        </View>
-        {endIcon}
-        {hasEyeIcon && (
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            {showPassword ? <EyeIcon /> : <EyeLinedIcon />}
-          </TouchableOpacity>
-        )}
-      </View>
+      {onPress ? (
+        <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
+          {InputComponent}
+        </TouchableOpacity>
+      ) : (
+        InputComponent
+      )}
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   otterInputContainer: {
-    flex: 1,
     gap: 10,
   },
   inputLabel: {
@@ -69,7 +110,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   inputContainer: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -79,14 +119,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.gray200,
     borderRadius: 10,
+    minHeight: 50,
   },
   iconAndInputContainer: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
   },
   theInput: {
+    flex: 1,
     direction: "rtl",
+    fontFamily: "AlmaraiRegular",
+    textAlign: "right",
+    color: Colors.gray700,
+    height: "100%",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 10,
+    marginTop: -5,
+    textAlign: "right",
     fontFamily: "AlmaraiRegular",
   },
 });

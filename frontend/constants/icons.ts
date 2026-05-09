@@ -9,6 +9,16 @@ import ReservationTypeIcon from "../assets/icons/reservation-type.svg";
 import DateIcon from "../assets/icons/date.svg";
 import TimeIcon from "../assets/icons/time.svg";
 import ChevronLeftIcon from "../assets/icons/chevron-left.svg";
+import BackArrowIcon from "../assets/icons/back-arrow.svg";
+import Service from "../assets/icons/service.svg";
+import Age from "../assets/icons/age.svg";
+import Gender from "../assets/icons/gender.svg";
+import Note from "../assets/icons/note.svg";
+import InputDate from "../assets/icons/input-date.svg";
+import InputTime from "../assets/icons/input-time.svg";
+import Location from "../assets/icons/location.svg";
+import UserName from "../assets/icons/name.svg";
+import SelectArrowIcon from "../assets/icons/select-arrrow.svg";
 
 export const ICONS = {
     mainDoneStatus:MainDoneStatusIcon,
@@ -22,5 +32,14 @@ export const ICONS = {
     settingsActive: SettingIconActive,
     reservations: ReservationsIcon,
     reservationsActive: ReservationsIconActive,
-    
+    backArrow:BackArrowIcon,
+    service:Service,
+    age:Age,
+    gender:Gender,
+    note:Note,
+    inputDate:InputDate,
+    inputTime:InputTime,
+    location:Location,
+    userName:UserName,
+    selectArrow: SelectArrowIcon,
 }

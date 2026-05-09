@@ -4,10 +4,9 @@ import { Colors } from '@/constants/theme'
 import { LinearGradient } from 'expo-linear-gradient';
 import { ICONS } from '@/constants/icons';
 import { Image } from 'expo-image';
-import {  useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 
 export default function HomePageContent() {
- const router = useRouter();
   return (
     <View style={styles.container}>
         {/* next reservation card */}
@@ -46,56 +45,83 @@ export default function HomePageContent() {
       <View style={styles.ourServicesContainer}>
         <Text style={styles.newSectionTitle}>خدماتنا</Text>
         
-        <TouchableOpacity activeOpacity={0.8} onPress={()=>{
-                router.navigate("/(tabs)/MyReservations")
-             }} style={styles.serviceCardContainer}>
-            <LinearGradient  colors={[Colors.main, Colors.secondary]}  start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}} style={styles.serviceCard}>
-             <View  style={styles.serviceCardImageContainer}>
+        <Link 
+          href={{
+            pathname: "/add-reservation",
+            params: {
+              serviceName: "حجز أشعة",
+              serviceType: "XRAY"
+            }
+          }}
+          asChild
+        >
+          <TouchableOpacity activeOpacity={0.8} style={styles.serviceCardContainer}>
+              <LinearGradient  colors={[Colors.main, Colors.secondary]}  start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}} style={styles.serviceCard}>
+              <View  style={styles.serviceCardImageContainer}>
 
-                <Image
-                style={styles.serviceCardImage}
-                source={require("../../../assets/images/x-rays.png")}
-                />
-                </View>
-                <Text style={styles.serviceCardText}>أشعة منزلية</Text>
-                <ICONS.chevronLeft />
-            </LinearGradient>
-        </TouchableOpacity>
+                  <Image
+                  style={styles.serviceCardImage}
+                  source={require("../../../assets/images/x-rays.png")}
+                  />
+                  </View>
+                  <Text style={styles.serviceCardText}>أشعة منزلية</Text>
+                  <ICONS.chevronLeft />
+              </LinearGradient>
+          </TouchableOpacity>
+        </Link>
 
-        <TouchableOpacity activeOpacity={0.8} onPress={()=>{
-                router.navigate("/(tabs)/MyReservations")
-             }} style={styles.serviceCardContainer}>
-            <LinearGradient  colors={[Colors.main, Colors.secondary]}  start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}} style={styles.serviceCard}>
-             <View  style={styles.serviceCardImageContainer}>
+        <Link 
+          href={{
+            pathname: "/add-reservation",
+            params: {
+              serviceName: "حجز تحاليل وسحب عينات",
+              serviceType: "LABORATORY"
+            }
+          }}
+          asChild
+        >
+          <TouchableOpacity activeOpacity={0.8} style={styles.serviceCardContainer}>
+              <LinearGradient  colors={[Colors.main, Colors.secondary]}  start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}} style={styles.serviceCard}>
+              <View  style={styles.serviceCardImageContainer}>
 
-                <Image
-                style={styles.serviceCardImage}
-                source={require("../../../assets/images/medical-tests.png")}
-                />
-                </View>
-                <Text style={styles.serviceCardText}>تحاليل وسحب عينات </Text>
-                <ICONS.chevronLeft />
-            </LinearGradient>
-        </TouchableOpacity>
+                  <Image
+                  style={styles.serviceCardImage}
+                  source={require("../../../assets/images/medical-tests.png")}
+                  />
+                  </View>
+                  <Text style={styles.serviceCardText}>تحاليل وسحب عينات </Text>
+                  <ICONS.chevronLeft />
+              </LinearGradient>
+          </TouchableOpacity>
+        </Link>
 
-        <TouchableOpacity activeOpacity={0.8} onPress={()=>{
-                router.navigate("/(tabs)/MyReservations")
-             }} style={styles.serviceCardContainer}>
-            <LinearGradient  colors={[Colors.main, Colors.secondary]}  start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}} style={styles.serviceCard}>
-             <View  style={styles.serviceCardImageContainer}>
+        <Link 
+          href={{
+            pathname: "/add-reservation",
+            params: {
+              serviceName: "حجز خدمات تمريضية منزلية",
+              serviceType: "HOME_NURSING"
+            }
+          }}
+          asChild
+        >
+          <TouchableOpacity activeOpacity={0.8} style={styles.serviceCardContainer}>
+              <LinearGradient  colors={[Colors.main, Colors.secondary]}  start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}} style={styles.serviceCard}>
+              <View  style={styles.serviceCardImageContainer}>
 
-                <Image
-                style={styles.serviceCardImage}
-                source={require("../../../assets/images/home-medical-services.png")}
-                />
-                </View>
-                <Text style={styles.serviceCardText}>الخدمات التمريضية المنزلية </Text>
-                <ICONS.chevronLeft />
-            </LinearGradient>
-        </TouchableOpacity>
+                  <Image
+                  style={styles.serviceCardImage}
+                  source={require("../../../assets/images/home-medical-services.png")}
+                  />
+                  </View>
+                  <Text style={styles.serviceCardText}>الخدمات التمريضية المنزلية </Text>
+                  <ICONS.chevronLeft />
+              </LinearGradient>
+          </TouchableOpacity>
+        </Link>
 
       </View>
     </View>

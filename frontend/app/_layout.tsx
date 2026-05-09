@@ -65,6 +65,12 @@ export default function RootLayout() {
               headerShown: false,
             }}
           />
+           <Stack.Screen
+            name="add-reservation"
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack>
       
       </SafeAreaProvider>

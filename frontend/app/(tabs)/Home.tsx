@@ -14,6 +14,7 @@ export default function HomeScreen() {
       <Link
         href="/auth"
         style={styles.authLink}
+        
       >
         Go to auth
       </Link>
